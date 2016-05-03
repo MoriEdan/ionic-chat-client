@@ -1,0 +1,42 @@
+<ion-navbar *navbar primary>
+  <button menuToggle>
+    <ion-icon name="menu"></ion-icon>
+  </button>
+  <ion-title>{{ otherUser?.display_name }}</ion-title>
+</ion-navbar>
+
+<ion-content padding>
+  <ion-refresher (refresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to leave room" refreshingSpinner="circles" refreshingText="Joining room..."></ion-refresher-content>
+  </ion-refresher>
+  <ion-list>
+
+    <ion-card *ngFor="#msg of msgHistory">
+      <ion-card-content>
+        <p>{{ msg.message }}</p>
+      </ion-card-content>
+
+      <ion-item>
+        <ion-note item-left *ngIf="msg.points > 0">
+          {{ msg?.points }} points
+        </ion-note>
+        <ion-note item-right>
+          {{ msg?.timestamp }}
+        </ion-note>
+      </ion-item>
+
+    </ion-card>
+
+
+  </ion-list>
+</ion-content>
+
+<ion-toolbar position="bottom">
+  <ion-input type="text" [(ngModel)]="input" placeholder="Type message..."></ion-input>
+  <ion-buttons end>
+    <button royal (click)="sendMessage(input)">
+      Send
+      <ion-icon name="send"></ion-icon>
+    </button>
+  </ion-buttons>
+</ion-toolbar>
